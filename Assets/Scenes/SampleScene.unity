@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 137764121}
   - component: {fileID: 137764120}
   - component: {fileID: 137764119}
-  - component: {fileID: 137764122}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -206,19 +205,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 137764120}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 137764122}
-        m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
-        m_MethodName: TriggerDialogue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &137764120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,24 +244,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137764117}
   m_CullTransparentMesh: 1
---- !u!114 &137764122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137764117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06b7d43fc70075741807843f2aaf5f6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    dialogueName: Your boi
-    sentences:
-    - Wow!!
-    - This is crazy dud
-    - PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!PLACEHOLDING!
 --- !u!1 &182569138
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e735fe131f82f4db4ca9e4d8dc8f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueManager: {fileID: 1012259936}
 --- !u!1 &1260207692
 GameObject:
   m_ObjectHideFlags: 0
