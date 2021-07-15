@@ -1072,7 +1072,7 @@ MonoBehaviour:
   nameText: {fileID: 1260207694}
   dialogueText: {fileID: 1235336603}
   animator: {fileID: 1698217667}
-  textSpeed: 0.05
+  textSpeed: 0.03
 --- !u!4 &1012259937
 Transform:
   m_ObjectHideFlags: 0
@@ -1377,8 +1377,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e735fe131f82f4db4ca9e4d8dc8f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 377776644}
 --- !u!1 &1260207692
 GameObject:
   m_ObjectHideFlags: 0

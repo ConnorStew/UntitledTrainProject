@@ -78,6 +78,7 @@ public class Character
         }
         else
         {
+            currentConversation = null;
             dialogManager.EndDialogue();
         }
     }
@@ -92,9 +93,15 @@ public class Character
     /// </summary>
     internal void DisplayConversation()
     {
-        string currentDialog = (string)currentConversation["dialog"];
-
-        dialogManager.SetConversation(currentDialog);
+        if (currentConversation != null)
+        {
+            string currentDialog = (string)currentConversation["dialog"];
+            dialogManager.SetCharacter(Name);
+            dialogManager.SetConversation(currentDialog);
+        } else
+        {
+            dialogManager.EndDialogue();
+        }
     }
 
     private JToken GetSideConversation(string name)

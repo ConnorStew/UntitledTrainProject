@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     private void SetCharacter(Character character)
     {
         currentCharacter = character;
-        dialogueManager.SetCharacter(character.Name);
         character.DisplayConversation();
     }
 
