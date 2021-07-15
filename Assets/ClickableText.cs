@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class ClickableText : MonoBehaviour, IPointerClickHandler
 {
 
-    public DialogueManager dialogueManager;
+    public GameManager gameManager;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -19,7 +19,7 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             if (wordIndex != -1)
             {
                 string lastClickedWord = text.textInfo.wordInfo[wordIndex].GetWord();
-                dialogueManager.WordClicked(lastClickedWord);
+                gameManager.WordClicked(lastClickedWord);
             }
         }
     }

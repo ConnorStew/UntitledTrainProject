@@ -1,0 +1,31 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "its hero time! yeeeee"
+    },
+
+    {
+      "dialog": "You made it to the second act!"
+    },
+
+    {
+      "dialog": "You made it to the third act!",
+      "links": [
+        {
+          "word": "third",
+          "goto": "secret1",
+          "sadness": "20"
+        },
+        {
+          "word": "act",
+          "goto": "secret2",
+          "anger": "10"
+        }
+      ]
+    },
+
+    {
+      "dialog": "You made it to the fourth act!"
+    }
+  ]
+}

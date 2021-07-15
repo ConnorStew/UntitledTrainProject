@@ -1,5 +1,4 @@
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -14,45 +13,16 @@ public class DialogueManager : MonoBehaviour
     public Animator animator;
     public float textSpeed;
 
-    private Queue<string> sentences;
-    private JObject conversations;
-    private JToken conversation;
-    private JArray links;
+    private Queue<string> sentences = new Queue<string>();
 
-    void Start()
+    public void SetCharacter(string characterName)
     {
-        sentences = new Queue<string>();
-        conversations = JObject.Parse(File.ReadAllText("Assets/Conversations.json"));
-        StartDialog("opening");
+        nameText.text = characterName;
     }
 
-    internal void WordClicked(string lastClickedWord)
-    {
-        // Debug.Log($"Clicked: {lastClickedWord}, have {links.Count} links.");
-        foreach (JToken link in links.Children())
-        {
-            string word = (string)link["word"];
-            string nextConversation = (string)link["goto"];
-
-            if (word.Equals(lastClickedWord))
-            {
-                Debug.Log($"Found link: {word}, going to {nextConversation}");
-                StartDialog(nextConversation);
-            }
-        }
-    }
-
-    public void StartDialog(string dialogueName)
+    public void SetConversation(string dialog)
     {
         animator.SetBool("isOpen", true);
-
-        conversation = conversations.SelectToken($"$.conversations[?(@.name == '{dialogueName}')]");
-        string conversationName = (string)conversation["name"];
-        string characterName = (string)conversation["character"];
-        string dialog = (string)conversation["dialog"];
-        links = (JArray)conversation["links"];
-
-        nameText.text = characterName;
 
         sentences.Clear();
 
@@ -84,9 +54,8 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void EndDialogue()
+    public void EndDialogue()
     {
         animator.SetBool("isOpen", false);
-        Debug.Log("End of convo.");
     }
 }
