@@ -39,6 +39,7 @@ public class Character
     private string lastResponse;
 
     private string currentSideDialog;
+    private int baseQuestionIndex;
 
     public Character(DialogueManager dialogManager, GameManager gameManager, string name)
     {
@@ -129,6 +130,11 @@ public class Character
             JToken choices = nextConversation.Value<JToken>("choices");
             if (choices != null)
             {
+                if (state == DialogState.MainDialog)
+                {
+                    baseQuestionIndex = mainDialogStep;
+                }
+
                 dialogType = DialogType.Question;
                 gameManager.SwitchToQuestionUI(choices);
             }
@@ -154,10 +160,14 @@ public class Character
             if (state == DialogState.SideDialog)
             {
                 state = DialogState.MainDialog;
+                ContinueConversation();
             }
             else
             {
-                EndDialogue();
+                //go back to the base questions
+                mainDialogStep = baseQuestionIndex - 1;
+                state = DialogState.MainDialog;
+                ContinueConversation();
             }
         }
     }
@@ -167,6 +177,17 @@ public class Character
     /// </summary>
     internal void DisplayConversation()
     {
+        if (dialogType == DialogType.Dialog || dialogType == DialogType.Response)
+        {
+            gameManager.SwitchToDialogUI();
+        }
+
+        if (dialogType == DialogType.Question)
+        {
+            JToken choices = currentConversation.Value<JToken>("choices");
+            gameManager.SwitchToQuestionUI(choices);
+        }
+
         if (conversationEnded)
         {
             dialogManager.EndDialogue(); //calling this again to make sure dialog window closes.
@@ -180,15 +201,11 @@ public class Character
             return;
         }
 
-        if (currentConversation != null)
+        if (currentConversation != null && dialogType == DialogType.Dialog || dialogType == DialogType.Response)
         {
             string currentDialog = (string)currentConversation["dialog"];
             dialogManager.SetCharacter(name);
             dialogManager.SetConversation(currentDialog);
-        }
-        else
-        {
-            EndDialogue();
         }
     }
 
@@ -200,6 +217,7 @@ public class Character
 
     private JToken GetSideConversation(string name)
     {
+        Debug.Log($"Going into side dialog: {name}");
         sideDialogStep++;
         return sideConversations[name].SelectToken($"$.conversations[{sideDialogStep}]");
     }
