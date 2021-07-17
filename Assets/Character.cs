@@ -177,6 +177,17 @@ public class Character
     /// </summary>
     internal void DisplayConversation()
     {
+        if (dialogType == DialogType.Dialog)
+        {
+            gameManager.SwitchToDialogUI();
+        }
+
+        if (dialogType == DialogType.Question)
+        {
+            JToken choices = currentConversation.Value<JToken>("choices");
+            gameManager.SwitchToQuestionUI(choices);
+        }
+
         if (conversationEnded)
         {
             dialogManager.EndDialogue(); //calling this again to make sure dialog window closes.
