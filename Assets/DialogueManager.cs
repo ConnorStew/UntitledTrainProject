@@ -46,6 +46,9 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence(string sentence)
     {
+        if (sentence == null)
+            throw new InvalidDataException("Sentance is null!");
+
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {

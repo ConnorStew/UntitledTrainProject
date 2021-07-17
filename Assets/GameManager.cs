@@ -1,22 +1,36 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public Camera cam;
     public DialogueManager dialogueManager;
 
+    public GameObject dialogPanel;
+    public GameObject buttonPrefab;
+
+    public GameObject continueButton;
+    public GameObject dialogText;
+    public GameObject nameText;
+
     private Character soldier, alien, hero;
 
     private Character currentCharacter;
 
+    private Queue<GameObject> buttons;
+
     void Start()
     {
-        soldier = new Character(dialogueManager, "Soldier", "Assets/Soldier_Main.json", "Assets/Soldier_Side.json");
-        //alien = new Character(dialogueManager, "Alien", "Assets/Alien_Main.json", "Assets/Alien_Side.json");
-        hero = new Character(dialogueManager, "Hero", "Assets/Hero_Main.json", "Assets/Hero_Side.json");
+        soldier = new Character(dialogueManager, this, "Soldier");
+        //alien = new Character(dialogueManager, "Alien");
+        hero = new Character(dialogueManager, this, "Hero");
+
+        buttons = new Queue<GameObject>();
 
         ChangeCabin("Soldier");
     }
@@ -55,5 +69,48 @@ public class GameManager : MonoBehaviour
     internal void WordClicked(string lastClickedWord)
     {
         currentCharacter.WordClicked(lastClickedWord);
+    }
+
+    internal void SwitchToQuestionUI(JToken choices)
+    {
+        //hide the other dialog ui components
+        dialogText.SetActive(false);
+        nameText.SetActive(false);
+        continueButton.SetActive(false);
+
+        int x = 550;
+        int y = 160;
+
+        int index = 0;
+        foreach (JToken choice in choices.Children())
+        {
+            string choiceText = choice.Value<string>("choice");
+
+            GameObject button = (GameObject)Instantiate(buttonPrefab);
+            button.transform.SetParent(dialogPanel.transform);
+            button.transform.position = new Vector3(x, y);
+            button.GetComponent<Button>().onClick.AddListener(delegate { currentCharacter.ChoiceClicked(choiceText); } );
+            button.transform.GetChild(0).GetComponent<Text>().text = choiceText;
+
+            buttons.Enqueue(button);
+
+            y -= 30;
+            index++;
+        }
+    }
+
+    internal void SwitchToDialogUI()
+    {
+        //destroy any previous buttons.
+        while (buttons.Count > 0)
+        {
+            GameObject button = buttons.Dequeue();
+            Destroy(button);
+        }
+
+        //show dialog UI
+        dialogText.SetActive(true);
+        nameText.SetActive(true);
+        continueButton.SetActive(true);
     }
 }

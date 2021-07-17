@@ -1,0 +1,25 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "What do ya mean staring?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "Have you met the fella yet?"
+    },
+
+    {
+      "choices": [
+        {
+          "choice": "Yeah , he seemed really nice.",
+          "response": "Well I'm glad someone likes him, that googly eyed lil jackrabbit needs a friend. Keeps thumping on the wrong foxholes asking for sugar.",
+        },
+        {
+          "choice": "No, I haven’t had the chance yet.",
+          "response": "Well good luck when you do, the dude will just look dead at you and it doesn't ever feel like he's even noticed you."
+        }
+      ]
+    }
+  ]
+}

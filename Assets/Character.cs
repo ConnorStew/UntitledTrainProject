@@ -4,68 +4,119 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+
+
+enum DialogState { MainDialog, SideDialog }
+enum DialogType { Dialog, Question, Response }
 
 public class Character
 {
     /// <summary> Index of current main dialog step. </summary>
     private int mainDialogStep = -1;
 
+    private int sideDialogStep = -1;
+
     /// <summary> The side conversation. </summary>
+    private Dictionary<string, JToken> sideConversations;
+
     private JToken sideConversation;
 
     /// <summary> The main conversation. </summary>
     private JToken mainConversation;
 
     private JToken currentConversation;
-
+    private GameManager gameManager;
     private DialogueManager dialogManager;
 
-    public string Name { get; internal set; }
+    private string name;
 
-    public Character(DialogueManager dialogManager, string name, string mainDialogFile, string sideDialogFile)
+    private DialogState state;
+    private DialogType dialogType;
+
+    private bool conversationEnded;
+
+    private string lastResponse;
+
+    private string currentSideDialog;
+
+    public Character(DialogueManager dialogManager, GameManager gameManager, string name)
     {
+        this.gameManager = gameManager;
         this.dialogManager = dialogManager;
-        this.Name = name;
+        this.name = name;
+        this.sideConversations = new Dictionary<string, JToken>();
 
-        mainConversation = JObject.Parse(File.ReadAllText(mainDialogFile));
-        sideConversation = JObject.Parse(File.ReadAllText(sideDialogFile));
+        mainConversation = JObject.Parse(File.ReadAllText($"Assets/{name}/{name}.json"));
+
+        foreach (string file in Directory.GetFiles($"Assets/{name}", $"{name}_*.json"))
+        {
+            string findableName = file.Replace($@"Assets/{name}\{name}_", "").Replace(".json", "");
+            sideConversations.Add(findableName, JObject.Parse(File.ReadAllText(file)));
+        }
 
         //select the first conversation in the main dialog file.
+        conversationEnded = false;
+        state = DialogState.MainDialog;
+        dialogType = DialogType.Dialog;
         currentConversation = GetNextMainConversation();
     }
 
     internal void WordClicked(string lastClickedWord)
     {
-        JArray links = (JArray)currentConversation["links"];
+        JArray links = null;
+        if (dialogType == DialogType.Dialog)
+        {
+            links = (JArray)currentConversation["links"];
+        }
+
+        if (dialogType == DialogType.Response)
+        {
+            links = (JArray)currentConversation.SelectToken($"$.choices[?(@.response=='{lastResponse}')].links");
+        }
 
         foreach (JToken link in links.Children())
         {
             string word = (string)link["word"];
             string destinationName = (string)link["goto"];
-            
+
             if (word.Equals(lastClickedWord))
             {
-                ContinueConversation(destinationName);
+                sideDialogStep = -1;
+                state = DialogState.SideDialog;
+                currentSideDialog = destinationName;
+                ContinueConversation();
             }
         }
+    }
+
+    internal void ChoiceClicked(string choiceText)
+    {
+        string response = (string)currentConversation.SelectToken($"$.choices[?(@.choice=='{choiceText}')].response");
+
+        lastResponse = response;
+
+        dialogType = DialogType.Response;
+
+        gameManager.SwitchToDialogUI();
+        DisplayConversation();
     }
 
     /// <summary>
     /// Advances the dialog of this character.
     /// </summary>
-    internal void ContinueConversation(string sideConversationName)
+    internal void ContinueConversation()
     {
-        Debug.Log($"Going into new conversation.");
-        JToken nextConversation;
+        Debug.Log($"Going into new conversation. {state}, {dialogType}");
+        JToken nextConversation = null;
 
         //since side dialogs are only a one paragraph thing we can go back into the main dialog
-        if (sideConversationName != null)
+        if (state == DialogState.SideDialog)
         {
-            nextConversation = GetSideConversation(sideConversationName);
-
-            Debug.Log($"Going to side conversation: {nextConversation}"); 
+            nextConversation = GetSideConversation(currentSideDialog);
         }
-        else
+
+        if (state == DialogState.MainDialog)
         {
             nextConversation = GetNextMainConversation();
         }
@@ -74,18 +125,41 @@ public class Character
 
         if (nextConversation != null)
         {
-            dialogManager.SetConversation(nextConversation.Value<string>("dialog"));
+            //check if the next conversation is questions
+            JToken choices = nextConversation.Value<JToken>("choices");
+            if (choices != null)
+            {
+                dialogType = DialogType.Question;
+                gameManager.SwitchToQuestionUI(choices);
+            }
+            else
+            {
+
+                string characterName = nextConversation.Value<string>("character");
+                if (characterName != null)
+                {
+                    dialogManager.SetCharacter(characterName);
+                }
+                else
+                {
+                    dialogManager.SetCharacter(name);
+                }
+
+                dialogManager.SetConversation(nextConversation.Value<string>("dialog"));
+            }
         }
         else
         {
-            currentConversation = null;
-            dialogManager.EndDialogue();
+            //go back to the main dialog state if we get to the end of a side dialog.
+            if (state == DialogState.SideDialog)
+            {
+                state = DialogState.MainDialog;
+            }
+            else
+            {
+                EndDialogue();
+            }
         }
-    }
-
-    internal void ContinueConversation()
-    {
-        ContinueConversation(null);
     }
 
     /// <summary>
@@ -93,20 +167,41 @@ public class Character
     /// </summary>
     internal void DisplayConversation()
     {
+        if (conversationEnded)
+        {
+            dialogManager.EndDialogue(); //calling this again to make sure dialog window closes.
+            return;
+        }
+
+        if (dialogType == DialogType.Response)
+        {
+            dialogManager.SetCharacter(name);
+            dialogManager.SetConversation(lastResponse);
+            return;
+        }
+
         if (currentConversation != null)
         {
             string currentDialog = (string)currentConversation["dialog"];
-            dialogManager.SetCharacter(Name);
+            dialogManager.SetCharacter(name);
             dialogManager.SetConversation(currentDialog);
-        } else
-        {
-            dialogManager.EndDialogue();
         }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    private void EndDialogue()
+    {
+        conversationEnded = true;
+        dialogManager.EndDialogue();
     }
 
     private JToken GetSideConversation(string name)
     {
-        return sideConversation.SelectToken($"$.conversations[?(@.name == '{name}')]");
+        sideDialogStep++;
+        return sideConversations[name].SelectToken($"$.conversations[{sideDialogStep}]");
     }
 
     private JToken GetNextMainConversation()
