@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 
         buttons = new Queue<GameObject>();
 
+        buttonPrefab.SetActive(false);
+
         ChangeCabin("Soldier");
     }
     
@@ -85,8 +87,8 @@ public class GameManager : MonoBehaviour
             Destroy(button);
         }
 
-        int x = 550;
-        int y = 160;
+        float x = dialogPanel.transform.position.x;
+        float y = dialogPanel.transform.position.y;
 
         int index = 0;
         foreach (JToken choice in choices.Children())
@@ -95,11 +97,16 @@ public class GameManager : MonoBehaviour
 
             GameObject button = (GameObject)Instantiate(buttonPrefab);
             button.transform.SetParent(dialogPanel.transform);
+
             button.transform.position = new Vector3(x, y);
             button.GetComponent<Button>().onClick.AddListener(delegate { currentCharacter.ChoiceClicked(choiceText); } );
             button.transform.GetChild(0).GetComponent<Text>().text = choiceText;
+            button.SetActive(true);
 
             buttons.Enqueue(button);
+
+            Debug.Log(button.transform.position.x);
+            Debug.Log(button.transform.position.y);
 
             y -= 30;
             index++;
