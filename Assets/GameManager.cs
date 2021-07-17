@@ -78,6 +78,13 @@ public class GameManager : MonoBehaviour
         nameText.SetActive(false);
         continueButton.SetActive(false);
 
+        //destroy any previous buttons.
+        while (buttons.Count > 0)
+        {
+            GameObject button = buttons.Dequeue();
+            Destroy(button);
+        }
+
         int x = 550;
         int y = 160;
 

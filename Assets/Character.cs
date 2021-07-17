@@ -177,7 +177,7 @@ public class Character
     /// </summary>
     internal void DisplayConversation()
     {
-        if (dialogType == DialogType.Dialog)
+        if (dialogType == DialogType.Dialog || dialogType == DialogType.Response)
         {
             gameManager.SwitchToDialogUI();
         }
@@ -201,15 +201,11 @@ public class Character
             return;
         }
 
-        if (currentConversation != null)
+        if (currentConversation != null && dialogType == DialogType.Dialog || dialogType == DialogType.Response)
         {
             string currentDialog = (string)currentConversation["dialog"];
             dialogManager.SetCharacter(name);
             dialogManager.SetConversation(currentDialog);
-        }
-        else
-        {
-            EndDialogue();
         }
     }
 
