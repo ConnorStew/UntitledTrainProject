@@ -6,7 +6,13 @@
     },
 
     {
-      "dialog": "Because it’s delicious, I made it myself, gotta find something to do around here."
+      "dialog": "Because it's delicious, I made it myself. Gotta find something to do ‘round here.",
+      "links": [
+        {
+          "word": "made",
+          "goto": "Made"
+        }
+      ]
     }
   ]
 }
