@@ -1,34 +1,65 @@
 ﻿{
   "conversations": [
     {
-      "dialog": "BEEP BOOP ITS ME THE ALIEN"
+      "dialog": "A new passenger, how nice, are you enjoying the train?"
     },
 
+    {
+      "dialog": "Doubt much more than you, if you met her. She killed for coin, I can’t really blame her.",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "I wonder where we’re going."
+    },
     {
       "choices": [
         {
           "choice": "How long have you been here?",
-          "response": "I think it’s only been a few days, it gets hard to tell here though never can be sure when you’re coming or going.",
+          "response": "I’m not sure. Time lost meaning without nights, just sleeping when I’m sleepy. Could’ve been months, I always wanted to see the stars but i dont think this is the way I imagined.",
+          "links": [
+            {
+              "word": "stars",
+              "goto": "Stars"
+            },
+            {
+              "word": "imagined",
+              "goto": "Imagined"
+            }
+          ]
         },
         {
           "choice": "Have you met any of the other passengers?",
-          "response": "There was an altercation with the green fellow, I think he’s been avoiding me since then,Andy’s alright shame he cant hold his liquor though.",
+          "response": "I don’t think they like me too much. The hunter went to swing for me before the driver had to intervene, she thought I was some kind of monster. She’s a strange lady. Andy is nice, though I’m not sure I understand much of his talk.",
           "links": [
             {
-              "word": "altercation",
-              "goto": "Altercation"
+              "word": "swing",
+              "goto": "Swing"
             }
           ]
         },
         {
           "choice": "Do you know anything about this train?",
-          "response": "I’ve done some scoping around, the first thing that threw me was I couldn’t find an engine but it’s much stranger than that.",
+          "response": "I tried to explore but I kept getting lost, finding new things.",
           "links": [
             {
-              "word": "stranger",
-              "goto": "Stranger"
+              "word": "lost",
+              "goto": "Lost"
+            },
+            {
+              "word": "things",
+              "goto": "Things"
+            }
             }
           ]
+        },
+    {
+      "choice": "What did you do before this?",
+      "response": "I used to make sculptures, when I wasn’t working of course.",
+      "links": [
+        {
+          "word": "sculptures",
+          "goto": "Sculptures"
         }
       ]
     }

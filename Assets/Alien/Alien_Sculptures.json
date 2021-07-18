@@ -1,0 +1,12 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "You’re a sculptor?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "Yes, my acidic nature allows me to carve most minerals. Marble tastes best."
+    }
+  ]
+}

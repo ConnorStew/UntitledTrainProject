@@ -1,0 +1,22 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "You’re from a powerful race?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "Yes my people are quite the conquerors, many worlds have fallen to our superior technology and training in hand to mouth combat.",
+      "links": [
+        {
+          "word": "conquerors",
+          "goto": "Conquerors"
+        },
+        {
+          "word": "combat",
+          "goto": "Combat"
+        }
+      ]
+    }
+  ]
+}

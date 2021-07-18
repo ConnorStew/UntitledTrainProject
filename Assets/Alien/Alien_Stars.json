@@ -1,0 +1,22 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "You never got to see the stars before?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "No, though my people are a powerful space faring race, that wasn’t my job.",
+      "links": [
+        {
+          "word": "race",
+          "goto": "Race"
+        },
+        {
+          "word": "job",
+          "goto": "Job"
+        }
+      ]
+    }
+  ]
+}

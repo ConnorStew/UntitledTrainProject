@@ -57,6 +57,7 @@ public class Character
 
         foreach (string file in Directory.GetFiles($"Assets/{name}", $"{name}_*.json"))
         {
+            Debug.Log($"Reading:{file}");
             string findableName = file.Replace($@"Assets/{name}\{name}_", "").Replace(".json", "");
             sideConversations.Add(findableName, JObject.Parse(File.ReadAllText(file)));
         }
