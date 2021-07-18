@@ -28,6 +28,9 @@ public class DialogueManager : MonoBehaviour
 
         sentences.Clear();
 
+        gameManager.currentCharacter.DialogRead(dialog);
+
+
         sentences.Enqueue(dialog);
 
         DisplayNextSentence();

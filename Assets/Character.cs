@@ -45,6 +45,9 @@ public class Character
     private string currentSideDialog;
     private int baseQuestionIndex;
 
+    /// <summary> The amount of unique dialogs that the user has read. </summary>
+    public List<string> readDialogs;
+
     public Character(DialogueManager dialogManager, GameManager gameManager, SoundManager soundManager, string name)
     {
         this.gameManager = gameManager;
@@ -52,6 +55,7 @@ public class Character
         this.soundManager = soundManager;
         this.name = name;
         this.sideConversations = new Dictionary<string, JToken>();
+        this.readDialogs = new List<string>();
 
         mainConversation = JObject.Parse(File.ReadAllText($"Assets/{name}/{name}.json"));
 
@@ -69,6 +73,14 @@ public class Character
         currentConversation = GetNextMainConversation();
     }
 
+    internal void DialogRead(string dialog)
+    {
+        //if the dialog hasn't been read before
+        if (!readDialogs.Contains(dialog))
+        {
+            readDialogs.Add(dialog);
+        }
+    }
     internal void WordClicked(string lastClickedWord)
     {
         JArray links = null;
