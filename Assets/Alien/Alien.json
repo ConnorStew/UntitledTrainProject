@@ -5,11 +5,6 @@
     },
 
     {
-      "dialog": "Doubt much more than you, if you met her. She killed for coin, I can’t really blame her.",
-      "character": "Player"
-    },
-
-    {
       "dialog": "I wonder where we’re going."
     },
     {
@@ -50,16 +45,17 @@
               "word": "things",
               "goto": "Things"
             }
-            }
           ]
         },
-    {
-      "choice": "What did you do before this?",
-      "response": "I used to make sculptures, when I wasn’t working of course.",
-      "links": [
         {
-          "word": "sculptures",
-          "goto": "Sculptures"
+          "choice": "What did you do before this?",
+          "response": "I used to make sculptures, when I wasn’t working of course.",
+          "links": [
+            {
+              "word": "sculptures",
+              "goto": "Sculptures"
+            }
+          ]
         }
       ]
     }
