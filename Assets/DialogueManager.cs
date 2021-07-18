@@ -12,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Animator animator;
     public float textSpeed;
+    public SoundManager soundManager;
+    public GameManager gameManager;
 
     private Queue<string> sentences = new Queue<string>();
 
@@ -40,8 +42,20 @@ public class DialogueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
-        StopAllCoroutines();
+        StopTyping();
         StartCoroutine(TypeSentence(sentence));
+    }
+
+    /// <summary>
+    /// Stops all voice sounds and stops typing.
+    /// </summary>
+    private void StopTyping()
+    {
+        soundManager.StopSound("hunter_voice");
+        soundManager.StopSound("alien_voice");
+        soundManager.StopSound("soldier_voice");
+
+        StopAllCoroutines();
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -49,12 +63,19 @@ public class DialogueManager : MonoBehaviour
         if (sentence == null)
             throw new InvalidDataException("Sentance is null!");
 
+        string charName = gameManager.characterName.ToLower();
+
+        if (!nameText.text.Equals("Player"))
+            soundManager.PlaySound($"{charName}_voice");
+
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(textSpeed);
         }
+
+        soundManager.StopSound($"{charName}_voice");
     }
 
     public void EndDialogue()
