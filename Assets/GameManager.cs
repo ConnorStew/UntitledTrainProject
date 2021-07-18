@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
     {
         //hide the other dialog ui components
         dialogText.SetActive(false);
-        nameText.SetActive(false);
         continueButton.SetActive(false);
 
         //destroy any previous buttons.
@@ -89,8 +88,8 @@ public class GameManager : MonoBehaviour
 
         RectTransform rt = (RectTransform)dialogPanel.transform;
 
-        float x = dialogPanel.transform.position.x;
-        float y = dialogPanel.transform.position.y + rt.rect.height / 8;
+        float x = dialogPanel.transform.position.x;// - rt.rect.width / 8;
+        float y = dialogPanel.transform.position.y; // + rt.rect.height / 8
 
         int index = 0;
         foreach (JToken choice in choices.Children())
@@ -100,7 +99,10 @@ public class GameManager : MonoBehaviour
             GameObject button = (GameObject)Instantiate(buttonPrefab);
             button.transform.SetParent(dialogPanel.transform);
 
-            button.transform.position = new Vector3(x, y);
+
+            RectTransform buttonRect = (RectTransform)button.transform;
+
+            button.transform.position = new Vector3(x - buttonRect.rect.width / 2, y - buttonRect.rect.height / 2);
             button.GetComponent<Button>().onClick.AddListener(delegate { currentCharacter.ChoiceClicked(choiceText); } );
             button.transform.GetChild(0).GetComponent<Text>().text = choiceText;
             button.SetActive(true);
@@ -110,7 +112,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(button.transform.position.x);
             Debug.Log(button.transform.position.y);
 
-            y -= 40;
+            //y -= 30;
             index++;
         }
     }
@@ -126,7 +128,6 @@ public class GameManager : MonoBehaviour
 
         //show dialog UI
         dialogText.SetActive(true);
-        nameText.SetActive(true);
         continueButton.SetActive(true);
     }
 }
