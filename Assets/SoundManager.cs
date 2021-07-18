@@ -16,12 +16,23 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
     public void PlaySound(string clipName)
+    {
+        CheckClipName(clipName);
+
+        sounds[clipName].Play();
+    }
+
+    public void StopSound(string clipName)
+    {
+        CheckClipName(clipName);
+
+        sounds[clipName].Stop();
+    }
+
+    private void CheckClipName(string clipName)
     {
         if (!sounds.ContainsKey(clipName))
             throw new Exception($"Invalid clipName: {clipName}");
-
-        sounds[clipName].Play();
     }
 }

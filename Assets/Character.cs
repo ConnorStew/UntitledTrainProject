@@ -31,7 +31,12 @@ public class Character
     private GameManager gameManager;
     private DialogueManager dialogManager;
     private SoundManager soundManager;
-    private string name;
+
+    public string name
+    {
+        get;
+        private set;
+    }
 
     private DialogState state;
     private DialogType dialogType;

@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
 
     private Character currentCharacter;
 
+    public string characterName
+    {
+        get { return currentCharacter.name; }
+    }
+
     private Queue<GameObject> buttons;
 
     void Start()
