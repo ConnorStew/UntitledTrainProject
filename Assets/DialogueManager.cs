@@ -65,6 +65,7 @@ public class DialogueManager : MonoBehaviour
 
         string charName = gameManager.characterName.ToLower();
 
+        //don't play voice sound if the player is talking.
         if (!nameText.text.Equals("Player"))
             soundManager.PlaySound($"{charName}_voice");
 

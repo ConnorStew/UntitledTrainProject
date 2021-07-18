@@ -18,7 +18,7 @@
       "choices": [
         {
           "choice": "How long have you been here?",
-          "responses": [ "Just over a couple of weeks it’s a nice enough ride, not sure where we’re headed though and that driver kinda gives me the willies." ],
+          "response": "Just over a couple of weeks it’s a nice enough ride, not sure where we’re headed though and that driver kinda gives me the willies.",
           "links": [
             {
               "word": "driver",
@@ -32,10 +32,7 @@
         },
         {
           "choice": "Have you met any of the other passengers?",
-          "responses": [
-            "Yeah that Hunter aint got much class but she’s a hoot and a half i’ll tell ya that, got stories that’ll make any man squirm like a racoon in the wash.",
-            "The lil fellas a tad odd for my taste seems decent enough but i don’t trust him much. Always just sorta staring at ya like he’s seein right through ya?"
-          ],
+          "response": "Yeah that Hunter aint got much class but she’s a hoot and a half i’ll tell ya that, got stories that’ll make any man squirm like a racoon in the wash. The lil fellas a tad odd for my taste seems decent enough but i don’t trust him much. Always just sorta staring at ya like he’s seein right through ya?",
           "links": [
             {
               "word": "Hunter",

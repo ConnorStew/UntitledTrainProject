@@ -17,12 +17,8 @@ public class Character
 
     private int sideDialogStep = -1;
 
-    private int responseDialogStep = -1;
-
     /// <summary> The side conversation. </summary>
     private Dictionary<string, JToken> sideConversations;
-
-    private JToken sideConversation;
 
     /// <summary> The main conversation. </summary>
     private JToken mainConversation;
@@ -103,7 +99,6 @@ public class Character
     internal void ChoiceClicked(string choiceText)
     {
         lastChoiceClicked = choiceText;
-        responseDialogStep = -1;
         string response = GetNextResponse();
 
         lastResponse = response;
@@ -123,18 +118,6 @@ public class Character
     {
         Debug.Log($"Going into new conversation. {state}, {dialogType}");
         JToken nextConversation = null;
-
-        if (currentConversation != null && dialogType == DialogType.Response)
-        {
-            string nextResponse = GetNextResponse();
-            
-            //don't advance the convo if there's another response
-            if (nextResponse != null)
-            {
-                dialogManager.SetConversation(nextResponse);
-                return;
-            }
-        }
 
         //since side dialogs are only a one paragraph thing we can go back into the main dialog
         if (state == DialogState.SideDialog)
@@ -240,7 +223,7 @@ public class Character
 
             if (dialogType == DialogType.Response)
             {
-                string currentDialog = (string)currentConversation["responses"][responseDialogStep];
+                string currentDialog = (string)currentConversation["response"];
                 dialogManager.SetCharacter(name);
                 dialogManager.SetConversation(currentDialog);
             }
@@ -268,8 +251,7 @@ public class Character
 
     private string GetNextResponse()
     {
-        responseDialogStep++;
-        return (string)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].responses[{responseDialogStep}]");
+        return (string)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].response");
     }
 
 }
