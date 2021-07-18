@@ -17,6 +17,8 @@ public class Character
 
     private int sideDialogStep = -1;
 
+    private int responseDialogStep = -1;
+
     /// <summary> The side conversation. </summary>
     private Dictionary<string, JToken> sideConversations;
 
@@ -37,6 +39,7 @@ public class Character
     private bool conversationEnded;
 
     private string lastResponse;
+    private string lastChoiceClicked;
 
     private string currentSideDialog;
     private int baseQuestionIndex;
@@ -73,7 +76,7 @@ public class Character
 
         if (dialogType == DialogType.Response)
         {
-            links = (JArray)currentConversation.SelectToken($"$.choices[?(@.response=='{lastResponse}')].links");
+            links = (JArray)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].links");
         }
 
         foreach (JToken link in links.Children())
@@ -93,7 +96,9 @@ public class Character
 
     internal void ChoiceClicked(string choiceText)
     {
-        string response = (string)currentConversation.SelectToken($"$.choices[?(@.choice=='{choiceText}')].response");
+        lastChoiceClicked = choiceText;
+        responseDialogStep = -1;
+        string response = GetNextResponse();
 
         lastResponse = response;
 
@@ -111,6 +116,18 @@ public class Character
         Debug.Log($"Going into new conversation. {state}, {dialogType}");
         JToken nextConversation = null;
 
+        if (currentConversation != null && dialogType == DialogType.Response)
+        {
+            string nextResponse = GetNextResponse();
+            
+            //don't advance the convo if there's another response
+            if (nextResponse != null)
+            {
+                dialogManager.SetConversation(nextResponse);
+                return;
+            }
+        }
+
         //since side dialogs are only a one paragraph thing we can go back into the main dialog
         if (state == DialogState.SideDialog)
         {
@@ -121,6 +138,7 @@ public class Character
         {
             nextConversation = GetNextMainConversation();
         }
+
 
         currentConversation = nextConversation;
 
@@ -167,6 +185,7 @@ public class Character
                 //go back to the base questions
                 mainDialogStep = baseQuestionIndex - 1;
                 state = DialogState.MainDialog;
+                dialogType = DialogType.Question;
                 ContinueConversation();
             }
         }
@@ -201,11 +220,22 @@ public class Character
             return;
         }
 
-        if (currentConversation != null && dialogType == DialogType.Dialog || dialogType == DialogType.Response)
+        if (currentConversation != null)
         {
-            string currentDialog = (string)currentConversation["dialog"];
-            dialogManager.SetCharacter(name);
-            dialogManager.SetConversation(currentDialog);
+
+            if (dialogType == DialogType.Dialog)
+            {
+                string currentDialog = (string)currentConversation["dialog"];
+                dialogManager.SetCharacter(name);
+                dialogManager.SetConversation(currentDialog);
+            }
+
+            if (dialogType == DialogType.Response)
+            {
+                string currentDialog = (string)currentConversation["responses"][responseDialogStep];
+                dialogManager.SetCharacter(name);
+                dialogManager.SetConversation(currentDialog);
+            }
         }
     }
 
@@ -226,6 +256,12 @@ public class Character
     {
         mainDialogStep++;
         return mainConversation.SelectToken($"$.conversations[{mainDialogStep}]");
+    }
+
+    private string GetNextResponse()
+    {
+        responseDialogStep++;
+        return (string)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].responses[{responseDialogStep}]");
     }
 
 }
