@@ -1,0 +1,12 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "What was your job?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "All I did was organise the carbon tubes for the replicators, nothing too complicated. Bored the hell out of me.",
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "What do you mean you kept getting lost?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "The train."
+    }
+  ]
+}

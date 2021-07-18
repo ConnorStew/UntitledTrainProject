@@ -1,0 +1,22 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "She took a swing at you?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "Well apparently I look like the creatures she would hunt to earn her keep, before this.",
+      "links": [
+        {
+          "word": "creatures",
+          "goto": "Creatures"
+        },
+        {
+          "word": "hunt",
+          "goto": "Hunt"
+        }
+      ]
+    }
+  ]
+}
