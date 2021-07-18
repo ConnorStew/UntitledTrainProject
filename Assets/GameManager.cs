@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,12 +24,11 @@ public class GameManager : MonoBehaviour
 
     private Character currentCharacter;
 
-    public string characterName
-    {
-        get { return currentCharacter.name; }
-    }
-
     private Queue<GameObject> buttons;
+
+    internal string characterName { 
+        get { return currentCharacter.name; } 
+    }
 
     void Start()
     {
@@ -130,31 +130,24 @@ public class GameManager : MonoBehaviour
         RectTransform rt = (RectTransform)dialogPanel.transform;
 
         float x = 500;// dialogPanel.transform.position.x;// - rt.rect.width / 8;
-        float y = 200;// dialogPanel.transform.position.y; // + rt.rect.height / 8
-
-        int index = 0;
+        float y = 100;// dialogPanel.transform.position.y; // + rt.rect.height / 8
         foreach (JToken choice in choices.Children())
         {
             string choiceText = choice.Value<string>("choice");
 
             GameObject button = (GameObject)Instantiate(buttonPrefab);
             button.transform.SetParent(dialogPanel.transform);
-
-
-            RectTransform buttonRect = (RectTransform)button.transform;
-
-            button.transform.position = new Vector3(x - buttonRect.rect.width / 2, y - buttonRect.rect.height / 2);
+            button.transform.position = new Vector3(x, y);
             button.GetComponent<Button>().onClick.AddListener(delegate { currentCharacter.ChoiceClicked(choiceText); } );
-            button.transform.GetChild(0).GetComponent<Text>().text = choiceText;
+            button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choiceText;
             button.SetActive(true);
 
             buttons.Enqueue(button);
 
-            //Debug.Log(button.transform.position.x);
-            //Debug.Log(button.transform.position.y);
+            Debug.Log(button.transform.position.x);
+            Debug.Log(button.transform.position.y);
 
-            y -= 40;
-            index++;
+            y -= 30;
         }
     }
 

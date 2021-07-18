@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Text nameText;
+    public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public Animator animator;
     public float textSpeed;
@@ -51,9 +51,9 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void StopTyping()
     {
-        soundManager.StopSound("hunter_voice");
-        soundManager.StopSound("alien_voice");
-        soundManager.StopSound("soldier_voice");
+        //soundManager.StopSound("hunter_voice");
+        //soundManager.StopSound("alien_voice");
+        //soundManager.StopSound("soldier_voice");
 
         StopAllCoroutines();
     }

@@ -5,16 +5,9 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public Dictionary<string,AudioSource> sounds;
+    public Dictionary<string,AudioSource> sounds = new Dictionary<string, AudioSource>();
 
-    void Start()
-    {
-        sounds = new Dictionary<string, AudioSource>();
-        foreach (AudioSource source in Component.FindObjectsOfType<AudioSource>())
-        {
-            sounds.Add(source.clip.name, source);
-        }
-    }
+    private bool soundsLoaded = false;
 
     public void PlaySound(string clipName)
     {
@@ -32,7 +25,20 @@ public class SoundManager : MonoBehaviour
 
     private void CheckClipName(string clipName)
     {
+        if (!soundsLoaded)
+            LoadSounds();
+
         if (!sounds.ContainsKey(clipName))
             throw new Exception($"Invalid clipName: {clipName}");
+    }
+
+    private void LoadSounds()
+    {
+        foreach (AudioSource source in Component.FindObjectsOfType<AudioSource>())
+        {
+            sounds.Add(source.clip.name, source);
+        }
+
+        soundsLoaded = true;
     }
 }
