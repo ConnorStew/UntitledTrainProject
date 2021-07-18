@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         soldier = new Character(dialogueManager, this, "Soldier");
-        //alien = new Character(dialogueManager, "Alien");
+        alien = new Character(dialogueManager, this, "Alien");
         hunter = new Character(dialogueManager, this, "Hunter");
 
         buttons = new Queue<GameObject>();
@@ -46,10 +46,12 @@ public class GameManager : MonoBehaviour
                 SetCharacter(soldier);
                 break;
             case "Alien":
+                cam.transform.position = new Vector3(2060.46f, 94.3f, -109.9f);
+                SetCharacter(alien);
                 break;
-            case "Hero":
-                //cam.transform.position = new Vector3(-3000, 70, -200);
-                //SetCharacter(hunter);
+            case "Hunter":
+                cam.transform.position = new Vector3(985.96f, 94.3f, -109.9f);
+                SetCharacter(hunter);
                 break;
             default:
                 break;
