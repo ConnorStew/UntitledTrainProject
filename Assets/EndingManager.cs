@@ -14,11 +14,11 @@ public class EndingManager : MonoBehaviour
         string character = PlayerPrefs.GetString("character");
         int points = PlayerPrefs.GetInt("points");
 
-        if (points > 10)
+        if (points > 9)
         {
             endingDialog.DisplaySentence(GetEnding(character, EndingType.Best));
         }
-        else if (points > 5)
+        else if (points > 4)
         {
             endingDialog.DisplaySentence(GetEnding(character, EndingType.Good));
         }

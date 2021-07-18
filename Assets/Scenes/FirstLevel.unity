@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.018510941, g: 0.005763739, b: 0.008002219, a: 1}
+  m_IndirectSpecularColor: {r: 0.00976305, g: 0.0030467678, b: 0.00445038, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4307,7 +4307,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 409514530}
   dialogueText: {fileID: 1359402807}
-  animator: {fileID: 1698217667}
+  dialogAnimator: {fileID: 1698217667}
+  soldierAnimator: {fileID: 425999069}
+  hunterAnimator: {fileID: 1304153433}
+  alienAnimator: {fileID: 1029764828}
   textSpeed: 0.01
   soundManager: {fileID: 1142019805}
   gameManager: {fileID: 377776644}

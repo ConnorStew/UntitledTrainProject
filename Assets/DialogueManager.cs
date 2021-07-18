@@ -10,7 +10,10 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
-    public Animator animator;
+    public Animator dialogAnimator;
+    public Animator soldierAnimator;
+    public Animator hunterAnimator;
+    public Animator alienAnimator;
     public float textSpeed;
     public SoundManager soundManager;
     public GameManager gameManager;
@@ -24,7 +27,25 @@ public class DialogueManager : MonoBehaviour
 
     public void SetConversation(string dialog)
     {
-        animator.SetBool("isOpen", true);
+        dialogAnimator.SetBool("isOpen", true);
+
+        switch (gameManager.currentCharacter.name)
+        {
+            case "Soldier":
+                soldierAnimator.SetBool("Talking", true);
+                soldierAnimator.SetBool("Idle", false);
+                break;
+
+            case "Hunter":
+                hunterAnimator.SetBool("Talking", true);
+                hunterAnimator.SetBool("Idle", false);
+                break;
+
+            case "Alien":
+                alienAnimator.SetBool("Talking", true);
+                alienAnimator.SetBool("Idle", false);
+                break;
+        }
 
         sentences.Clear();
 
@@ -54,9 +75,27 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void StopTyping()
     {
-        //soundManager.StopSound("hunter_voice");
-        //soundManager.StopSound("alien_voice");
-        //soundManager.StopSound("soldier_voice");
+        soundManager.StopSound("hunter_voice");
+        soundManager.StopSound("alien_voice");
+        soundManager.StopSound("soldier_voice");
+
+        switch (gameManager.currentCharacter.name)
+        {
+            case "Soldier":
+                soldierAnimator.SetBool("Talking", false);
+                soldierAnimator.SetBool("Idle", true);
+                break;
+
+            case "Hunter":
+                hunterAnimator.SetBool("Talking", false);
+                hunterAnimator.SetBool("Idle", true);
+                break;
+
+            case "Alien":
+                alienAnimator.SetBool("Talking", false);
+                alienAnimator.SetBool("Idle", true);
+                break;
+        }
 
         StopAllCoroutines();
     }
@@ -84,6 +123,6 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        animator.SetBool("isOpen", false);
+        dialogAnimator.SetBool("isOpen", false);
     }
 }
