@@ -30,7 +30,7 @@ public class Character
     private JToken currentConversation;
     private GameManager gameManager;
     private DialogueManager dialogManager;
-
+    private SoundManager soundManager;
     private string name;
 
     private DialogState state;
@@ -44,10 +44,11 @@ public class Character
     private string currentSideDialog;
     private int baseQuestionIndex;
 
-    public Character(DialogueManager dialogManager, GameManager gameManager, string name)
+    public Character(DialogueManager dialogManager, GameManager gameManager, SoundManager soundManager, string name)
     {
         this.gameManager = gameManager;
         this.dialogManager = dialogManager;
+        this.soundManager = soundManager;
         this.name = name;
         this.sideConversations = new Dictionary<string, JToken>();
 
@@ -103,6 +104,8 @@ public class Character
         lastResponse = response;
 
         dialogType = DialogType.Response;
+
+        soundManager.PlaySound("mouse_click");
 
         gameManager.SwitchToDialogUI();
         DisplayConversation();

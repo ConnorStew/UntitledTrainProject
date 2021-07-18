@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public Camera cam;
     public DialogueManager dialogueManager;
+    public SoundManager soundManager;
 
     public GameObject dialogPanel;
     public GameObject buttonPrefab;
@@ -26,15 +27,27 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        soldier = new Character(dialogueManager, this, "Soldier");
-        alien = new Character(dialogueManager, this, "Alien");
-        hunter = new Character(dialogueManager, this, "Hunter");
+        soldier = new Character(dialogueManager, this, soundManager, "Soldier");
+        alien = new Character(dialogueManager, this, soundManager, "Alien");
+        hunter = new Character(dialogueManager, this, soundManager, "Hunter");
 
         buttons = new Queue<GameObject>();
 
         buttonPrefab.SetActive(false);
-
+        currentCharacter = soldier;
         ChangeCabin("Soldier");
+    }
+
+    public void ContinueButtonClicked()
+    {
+        soundManager.PlaySound("mouse_click");
+        ContinueConversation();
+    }
+
+    public void ChangeCabinButtonClicked(string character)
+    {
+        soundManager.PlaySound("mouse_click");
+        ChangeCabin(character);
     }
     
     public void ChangeCabin(string character)
@@ -43,14 +56,35 @@ public class GameManager : MonoBehaviour
         {
             case "Soldier":
                 cam.transform.position = new Vector3(141, 94.3f, -109.9f);
+
+                if (currentCharacter.Equals(alien))
+                    soundManager.PlaySound("alien_to_soldier");
+
+                if (currentCharacter.Equals(hunter))
+                    soundManager.PlaySound("hunter_to_soldier");
+
                 SetCharacter(soldier);
                 break;
             case "Alien":
                 cam.transform.position = new Vector3(2060.46f, 94.3f, -109.9f);
+
+                if (currentCharacter.Equals(soldier))
+                    soundManager.PlaySound("soldier_to_alien");
+
+                if (currentCharacter.Equals(hunter))
+                    soundManager.PlaySound("hunter_to_alien");
+
                 SetCharacter(alien);
                 break;
             case "Hunter":
                 cam.transform.position = new Vector3(985.96f, 94.3f, -109.9f);
+
+                if (currentCharacter.Equals(soldier))
+                    soundManager.PlaySound("soldier_to_hunter");
+
+                if (currentCharacter.Equals(alien))
+                    soundManager.PlaySound("alien_to_hunter");
+
                 SetCharacter(hunter);
                 break;
             default:
