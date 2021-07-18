@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         soldier = new Character(dialogueManager, this, "Soldier");
         //alien = new Character(dialogueManager, "Alien");
-        //hunter = new Character(dialogueManager, this, "Hunter");
+        hunter = new Character(dialogueManager, this, "Hunter");
 
         buttons = new Queue<GameObject>();
 
