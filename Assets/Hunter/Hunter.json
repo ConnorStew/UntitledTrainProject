@@ -1,32 +1,56 @@
 ﻿{
   "conversations": [
     {
-      "dialog": "Its hero time!"
+      "dialog": "Huh thought i'd managed to meet everyone on here already, well it's a pleasure to see ya just call me hunter."
     },
 
     {
       "choices": [
         {
           "choice": "How long have you been here?",
-          "response": "I think it’s only been a few days, it gets hard to tell here though never can be sure when you’re coming or going.",
+          "response": "I think it's only been a few days, it gets hard to tell here though, never can be sure when you're coming or going.",
+          "links": [
+            {
+              "word": "tell",
+              "goto": "Tell"
+            }
+          ]
         },
         {
           "choice": "Have you met any of the other passengers?",
-          "response": "There was an altercation with the green fellow, I think he’s been avoiding me since then,Andy’s alright shame he cant hold his liquor though.",
+          "response": "There was an altercation with the gooey fellow, I think he's been avoiding me since then. Andy's alright, shame he cant hold his liquor though.",
           "links": [
             {
               "word": "altercation",
               "goto": "Altercation"
+            },
+            {
+              "word": "liquor",
+              "goto": "Liquor"
             }
           ]
         },
         {
           "choice": "Do you know anything about this train?",
-          "response": "I’ve done some scoping around, the first thing that threw me was I couldn’t find an engine but it’s much stranger than that.",
+          "response": "I've done some scoping around, the first thing that threw me was I couldn't find an engine but it's much stranger than that.",
           "links": [
             {
               "word": "stranger",
               "goto": "Stranger"
+            }
+          ]
+        },
+        {
+          "choice": "What did you do before this?",
+          "response": "Pretty simple life, people have pests and I deal with them. For a fee of course, nobody works for free.",
+          "links": [
+            {
+              "word": "simple",
+              "goto": "Simple"
+            },
+            {
+              "word": "pests",
+              "goto": "Pests"
             }
           ]
         }
