@@ -42,7 +42,7 @@
         },
         {
           "choice": "What did you do before this?",
-          "response": "Pretty simple life, people have pests and I deal with them. For a fee of course, nobody works for free.",
+          "response": "Pretty simple life, people have pests and I deal with them. For a fee of course, nobody works for free, till the worm showed up and took me for a spin. ",
           "links": [
             {
               "word": "simple",
@@ -51,6 +51,10 @@
             {
               "word": "pests",
               "goto": "Pests"
+            },
+            {
+              "word": "worm",
+              "goto": "Worm"
             }
           ]
         }

@@ -1,0 +1,18 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "You stood in the open chests of dead cows?!",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "Obviously, we needed bait to get the worm back around, is that your main takeaway from that story?"
+    },
+
+    {
+      "dialog": "Yeah it's pretty horrific to think about.",
+      "character": "Player"
+    }
+
+  ]
+}

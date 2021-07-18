@@ -1,0 +1,12 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "Wait, you killed a werewolf?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "Well, yeah, I'm a monster hunter. I've killed a lot of cool stuff."
+    }
+  ]
+}

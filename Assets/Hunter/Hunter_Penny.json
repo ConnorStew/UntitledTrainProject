@@ -1,0 +1,18 @@
+﻿{
+  "conversations": [
+    {
+      "dialog": "Did you ever collect the bounty?",
+      "character": "Player"
+    },
+
+    {
+      "dialog": "‘Fraid i never got the chance. By the time I dug my way out of its bowels I had no idea where I was. Turns out to be some old temple. It took me a while to get outta there and when I did I had bigger things than that payday.",
+      "links": [
+        {
+          "word": "bigger",
+          "goto": "Bigger"
+        }
+      ]
+    }
+  ]
+}
