@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.014304692, g: 0.004299297, b: 0.006195658, a: 1}
+  m_IndirectSpecularColor: {r: 0.031151662, g: 0.009455883, b: 0.013039928, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2343,6 +2343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 572423641}
   dialogueManager: {fileID: 1012259936}
+  soundManager: {fileID: 0}
   dialogPanel: {fileID: 1698217663}
   buttonPrefab: {fileID: 915007531}
   continueButton: {fileID: 1788696708}
@@ -4643,6 +4644,8 @@ MonoBehaviour:
   dialogueText: {fileID: 1235336603}
   animator: {fileID: 1698217667}
   textSpeed: 0.01
+  soundManager: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!4 &1012259937
 Transform:
   m_ObjectHideFlags: 0
@@ -5398,7 +5401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1206374289
 Transform:
   m_ObjectHideFlags: 0
