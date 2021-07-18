@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.027597824, g: 0.008426523, b: 0.011708569, a: 1}
+  m_IndirectSpecularColor: {r: 0.0061270157, g: 0.001967044, b: 0.0029680994, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2207,7 +2207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392be15741228d24f88279fb93df6d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 572423641}
   dialogueManager: {fileID: 1012259936}
   dialogPanel: {fileID: 1698217663}
   buttonPrefab: {fileID: 915007531}
@@ -4079,7 +4079,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320.32, y: 36.9}
+  m_SizeDelta: {x: 452.74, y: 36.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915007533
 MonoBehaviour:
@@ -5256,10 +5256,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

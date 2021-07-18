@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject dialogText;
     public GameObject nameText;
 
-    private Character soldier, alien, hero;
+    private Character soldier, alien, hunter;
 
     private Character currentCharacter;
 
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         soldier = new Character(dialogueManager, this, "Soldier");
         //alien = new Character(dialogueManager, "Alien");
-        hero = new Character(dialogueManager, this, "Hero");
+        //hunter = new Character(dialogueManager, this, "Hunter");
 
         buttons = new Queue<GameObject>();
 
@@ -42,14 +42,14 @@ public class GameManager : MonoBehaviour
         switch (character)
         {
             case "Soldier":
-                cam.transform.position = new Vector3(-2000, 50, -100);
+                cam.transform.position = new Vector3(141, 94.3f, -109.9f);
                 SetCharacter(soldier);
                 break;
             case "Alien":
                 break;
             case "Hero":
-                cam.transform.position = new Vector3(-3000, 70, -200);
-                SetCharacter(hero);
+                //cam.transform.position = new Vector3(-3000, 70, -200);
+                //SetCharacter(hunter);
                 break;
             default:
                 break;
@@ -88,8 +88,8 @@ public class GameManager : MonoBehaviour
 
         RectTransform rt = (RectTransform)dialogPanel.transform;
 
-        float x = dialogPanel.transform.position.x;// - rt.rect.width / 8;
-        float y = dialogPanel.transform.position.y; // + rt.rect.height / 8
+        float x = 500;// dialogPanel.transform.position.x;// - rt.rect.width / 8;
+        float y = 200;// dialogPanel.transform.position.y; // + rt.rect.height / 8
 
         int index = 0;
         foreach (JToken choice in choices.Children())
@@ -109,10 +109,10 @@ public class GameManager : MonoBehaviour
 
             buttons.Enqueue(button);
 
-            Debug.Log(button.transform.position.x);
-            Debug.Log(button.transform.position.y);
+            //Debug.Log(button.transform.position.x);
+            //Debug.Log(button.transform.position.y);
 
-            //y -= 30;
+            y -= 40;
             index++;
         }
     }
