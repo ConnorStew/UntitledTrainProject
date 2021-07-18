@@ -8,6 +8,7 @@ enum EndingType {Bad, Good, Best}
 public class EndingManager : MonoBehaviour
 {
     public EndingDialog endingDialog;
+    public SoundManager soundManager;
 
     void Start()
     {
@@ -30,6 +31,19 @@ public class EndingManager : MonoBehaviour
 
     private string GetEnding(string character, EndingType type)
     {
+        switch(character)
+        {
+            case "Soldier":
+                soundManager.PlaySound("soldier_ending");
+                break;
+            case "Alien":
+                soundManager.PlaySound("alien_ending");
+                break;
+            case "Hunter":
+                soundManager.PlaySound("hunter_ending");
+                break;
+        }
+
         return File.ReadAllText($"Assets/{character}/{type}.txt");
     }
 
