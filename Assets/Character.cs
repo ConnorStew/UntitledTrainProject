@@ -1,20 +1,23 @@
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
-
+/// <summary> The current state of the dialog, whether its on the main line or a side dialog. </summary>
 enum DialogState { MainDialog, SideDialog }
+
+/// <summary> The type of dialog being displayed. </summary>
 enum DialogType { Dialog, Question, Response }
 
+/// <summary>
+/// This class represents a character within the game.
+/// </summary>
 public class Character
 {
     /// <summary> Index of current main dialog step. </summary>
     private int mainDialogStep = -1;
 
+    /// <summary> Index of current side dialog step. </summary>
     private int sideDialogStep = -1;
 
     /// <summary> The side conversation. </summary>
@@ -23,31 +26,56 @@ public class Character
     /// <summary> The main conversation. </summary>
     private JToken mainConversation;
 
+    /// <summary> The current conversation being displayed. </summary>
     private JToken currentConversation;
+
+    /// <summary> The current side conversation being displayed. </summary>
+    private string currentSideDialog;
+
+    /// <summary> The current game manager. </summary>
     private GameManager gameManager;
+
+    /// <summary> The current dialog manager. </summary>
     private DialogueManager dialogManager;
+
+    /// <summary> The current sound manager. </summary>
     private SoundManager soundManager;
 
+    /// <summary> The state of the dialog being displayed. </summary>
+    private DialogState state;
+
+    /// <summary> The type of dialog being displayed. </summary>
+    private DialogType dialogType;
+
+    /// <summary> Whether the conversation has ended with this character. </summary>
+    private bool conversationEnded;
+
+    /// <summary> The last response given by the character. </summary>
+    private string lastResponse;
+
+    /// <summary> The last choice chosen by the player.. </summary>
+    private string lastChoiceClicked;
+
+    /// <summary> The index in the json array that contains the main character questions. </summary>
+    private int baseQuestionIndex;
+
+    /// <summary> The amount of unique dialogs that the user has read. </summary>
+    public List<string> readDialogs;
+
+    /// <summary> This characters name. </summary>
     public string name
     {
         get;
         private set;
     }
 
-    private DialogState state;
-    private DialogType dialogType;
-
-    private bool conversationEnded;
-
-    private string lastResponse;
-    private string lastChoiceClicked;
-
-    private string currentSideDialog;
-    private int baseQuestionIndex;
-
-    /// <summary> The amount of unique dialogs that the user has read. </summary>
-    public List<string> readDialogs;
-
+    /// <summary>
+    /// Initalises a character.
+    /// </summary>
+    /// <param name="dialogManager">The game's dialog manager.</param>
+    /// <param name="gameManager">The game's game manager.</param>
+    /// <param name="soundManager">The game's sound manager.</param>
+    /// <param name="name">The name of this character.</param>
     public Character(DialogueManager dialogManager, GameManager gameManager, SoundManager soundManager, string name)
     {
         this.gameManager = gameManager;
@@ -57,8 +85,10 @@ public class Character
         this.sideConversations = new Dictionary<string, JToken>();
         this.readDialogs = new List<string>();
 
+        //read the main conversation from file
         mainConversation = JObject.Parse(File.ReadAllText($"Assets/{name}/{name}.json"));
 
+        //read all side conversations from files
         foreach (string file in Directory.GetFiles($"Assets/{name}", $"{name}_*.json"))
         {
             Debug.Log($"Reading:{file}");
@@ -73,6 +103,10 @@ public class Character
         currentConversation = GetNextMainConversation();
     }
 
+    /// <summary>
+    /// Checks if a dialog has been read before, if not it's added to the readDialogs list.
+    /// </summary>
+    /// <param name="dialog">The dialog to check.</param>
     internal void DialogRead(string dialog)
     {
         //if the dialog hasn't been read before
@@ -81,7 +115,12 @@ public class Character
             readDialogs.Add(dialog);
         }
     }
-    internal void WordClicked(string lastClickedWord)
+
+    /// <summary>
+    /// Checks if a word being clicked links to another conversation, if so, it starts that conversation.
+    /// </summary>
+    /// <param name="clickedWord">The word that was clicked</param>
+    internal void WordClicked(string clickedWord)
     {
         JArray links = null;
         if (dialogType == DialogType.Dialog)
@@ -109,7 +148,7 @@ public class Character
             string word = (string)link["word"];
             string destinationName = (string)link["goto"];
 
-            if (word.Equals(lastClickedWord))
+            if (word.Equals(clickedWord))
             {
                 sideDialogStep = -1;
                 state = DialogState.SideDialog;
@@ -119,6 +158,10 @@ public class Character
         }
     }
 
+    /// <summary>
+    /// Switches to a new conversation based on a given choice.
+    /// </summary>
+    /// <param name="choiceText">The text from the clicked button.</param>
     internal void ChoiceClicked(string choiceText)
     {
         lastChoiceClicked = choiceText;
@@ -253,25 +296,31 @@ public class Character
         }
     }
 
-    private void EndDialogue()
-    {
-        conversationEnded = true;
-        dialogManager.EndDialogue();
-    }
-
+    /// <summary>
+    /// Gets the current side dialog from the given side dialog file.
+    /// </summary>
+    /// <param name="name">The name of the side dialog.</param>
+    /// <returns>The current dialog for the given side conversation.</returns>
     private JToken GetSideConversation(string name)
     {
-        Debug.Log($"Going into side dialog: {name}");
         sideDialogStep++;
         return sideConversations[name].SelectToken($"$.conversations[{sideDialogStep}]");
     }
 
+    /// <summary>
+    /// Gets the next step in the main conversation.
+    /// </summary>
+    /// <returns>The next dialog from the main conversation.</returns>
     private JToken GetNextMainConversation()
     {
         mainDialogStep++;
         return mainConversation.SelectToken($"$.conversations[{mainDialogStep}]");
     }
 
+    /// <summary>
+    /// Gets the response to the last clicked choice.
+    /// </summary>
+    /// <returns>The response to the last clicked choice</returns>
     private string GetNextResponse()
     {
         return (string)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].response");

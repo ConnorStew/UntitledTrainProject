@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class handles rotating the skybox.
+/// </summary>
 public class RotateSky : MonoBehaviour
 {
+    /// <summary> The speed to rotate the skybox at. </summary>
+    private float RotateSpeed = 1.2f;
 
-    public float RotateSpeed = 1.2f;
-    // Update is called once per frame
     void Update()
     {
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * RotateSpeed);
