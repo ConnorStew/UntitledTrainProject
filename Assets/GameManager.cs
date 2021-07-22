@@ -1,5 +1,7 @@
 using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,6 +43,12 @@ public class GameManager : MonoBehaviour
     /// <summary> The buttons that have been instantiated. </summary>
     private Queue<GameObject> buttons;
 
+    /// <summary> The animator that controls fading. </summary>
+    public Animator fadeAnimator;
+
+    /// <summary> Whether its the first fade this game. </summary>
+    private bool firstChange;
+
     /// <summary> The current character's name. </summary>
     internal string characterName { 
         get { return currentCharacter.name; } 
@@ -58,7 +66,8 @@ public class GameManager : MonoBehaviour
 
         buttonPrefab.SetActive(false);
         currentCharacter = soldier;
-        ChangeCabin("Soldier");
+        firstChange = true;
+        StartCoroutine(ChangeCabin("Soldier"));
     }
 
     /// <summary>
@@ -87,7 +96,8 @@ public class GameManager : MonoBehaviour
     public void ChangeCabinButtonClicked(string character)
     {
         soundManager.PlaySound("mouse_click");
-        ChangeCabin(character);
+
+        StartCoroutine(ChangeCabin(character));
     }
 
     /// <summary>
@@ -102,13 +112,30 @@ public class GameManager : MonoBehaviour
 
         soundManager.PlaySound(sound);
     }
-    
+
     /// <summary>
     /// Switches the cabin (by changing the camera position) and plays the relevent sound.
     /// </summary>
     /// <param name="character">The character to switch to.</param>
-    public void ChangeCabin(string character)
+    private IEnumerator ChangeCabin(string character)
     {
+        soundManager.StopSound("hunter_voice");
+        soundManager.StopSound("alien_voice");
+        soundManager.StopSound("soldier_voice");
+
+        if (firstChange == false)
+        {
+            Debug.Log("Fading out");
+            fadeAnimator.SetBool("visible", false);
+        }
+
+        firstChange = false;
+
+        yield return new WaitForSeconds(1);
+
+        fadeAnimator.SetBool("visible", true);
+        Debug.Log("Fading in");
+
         switch (character)
         {
             case "Soldier":
@@ -154,6 +181,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        yield return null;
     }
 
     /// <summary>

@@ -102,7 +102,9 @@ public class DialogueManager : MonoBehaviour
 
         StopTalking();
 
-        soundManager.StopSound($"{charName}_voice");
+        soundManager.StopSound("hunter_voice");
+        soundManager.StopSound("alien_voice");
+        soundManager.StopSound("soldier_voice");
     }
     
     /// <summary>
