@@ -6,7 +6,7 @@
     },
 
     {
-      "dialog": "Well the worm was just the half of it. The deeper I got the worse it got around me, even I found it horrifying, and I've seen more than enough to steel my belly.",
+      "dialog": "Well the worm was just the half of it. The deeper I got the worse it got around me, even I found it <color=yellow>horrifying</color>, and I've seen more than enough to steel my belly.",
       "links": [
         {
           "word": "horrifying",
