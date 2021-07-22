@@ -15,9 +15,6 @@ public class DialogueManager : MonoBehaviour
     /// <summary> The text that displays dialog to the player. </summary>
     public TextMeshProUGUI dialogueText;
 
-    /// <summary> The animator being used for the dialog box. </summary>
-    public Animator dialogAnimator;
-
     /// <summary> The animator being used for the soldier. </summary>
     public Animator soldierAnimator;
 
@@ -54,8 +51,6 @@ public class DialogueManager : MonoBehaviour
     /// <param name="dialog">The dialog to display.</param>
     public void SetConversation(string dialog)
     {
-        dialogAnimator.SetBool("isOpen", true);
-
         switch (gameManager.currentCharacter.name)
         {
             case "Soldier":
@@ -90,7 +85,6 @@ public class DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            EndDialogue();
             return;
         }
 
@@ -153,14 +147,5 @@ public class DialogueManager : MonoBehaviour
         }
 
         soundManager.StopSound($"{charName}_voice");
-    }
-
-
-    /// <summary>
-    /// Closes the dialog panel.
-    /// </summary>
-    public void EndDialogue()
-    {
-        dialogAnimator.SetBool("isOpen", false);
     }
 }
