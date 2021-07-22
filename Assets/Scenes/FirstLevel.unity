@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.028214995, g: 0.008591592, b: 0.011911499, a: 1}
+  m_IndirectSpecularColor: {r: 0.006122456, g: 0.0019654613, b: 0.002966905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2231,8 +2231,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f7540539f4c24249891db3398ce8b67, type: 2}
-  m_sharedMaterial: {fileID: 3108526814235619130, guid: 9f7540539f4c24249891db3398ce8b67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b6de8f20c8fd35e49bc4aec21ca9dfe5, type: 2}
+  m_sharedMaterial: {fileID: -9072436435747718120, guid: b6de8f20c8fd35e49bc4aec21ca9dfe5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7375,8 +7375,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f7540539f4c24249891db3398ce8b67, type: 2}
-  m_sharedMaterial: {fileID: 3108526814235619130, guid: 9f7540539f4c24249891db3398ce8b67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b6de8f20c8fd35e49bc4aec21ca9dfe5, type: 2}
+  m_sharedMaterial: {fileID: -9072436435747718120, guid: b6de8f20c8fd35e49bc4aec21ca9dfe5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7841,7 +7841,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f7540539f4c24249891db3398ce8b67, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b6de8f20c8fd35e49bc4aec21ca9dfe5, type: 2}
   m_sharedMaterial: {fileID: 3108526814235619130, guid: 9f7540539f4c24249891db3398ce8b67, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7905,7 +7905,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1519324747
