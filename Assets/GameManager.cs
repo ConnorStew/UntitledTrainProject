@@ -1,32 +1,47 @@
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary> This class is responsible for managing the backend of the game. </summary>
 public class GameManager : MonoBehaviour
 {
+    /// <summary> The game's main camera. </summary>
     public Camera cam;
+
+    /// <summary> The game's dialog manager. </summary>
     public DialogueManager dialogueManager;
+
+    /// <summary> The game's sound manager. </summary>
     public SoundManager soundManager;
 
+    /// <summary> The panel that displays the game's dialog, used as a parent for buttons. </summary>
     public GameObject dialogPanel;
+
+    /// <summary> The prefab used to generate the decision buttons. </summary>
     public GameObject buttonPrefab;
 
+    /// <summary> The button used to step through the dialog. </summary>
     public GameObject continueButton;
+
+    /// <summary> The text used to display dialog to the player. </summary>
     public GameObject dialogText;
+
+    /// <summary> The text used to display the speakers name. </summary>
     public GameObject nameText;
 
+    /// <summary> Objects used to represent our characters. </summary>
     private Character soldier, alien, hunter;
 
+    /// <summary> The character currently being displayed to the user. </summary>
     public Character currentCharacter;
 
+    /// <summary> The buttons that have been instantiated. </summary>
     private Queue<GameObject> buttons;
 
+    /// <summary> The current character's name. </summary>
     internal string characterName { 
         get { return currentCharacter.name; } 
     }
@@ -46,12 +61,18 @@ public class GameManager : MonoBehaviour
         ChangeCabin("Soldier");
     }
 
+    /// <summary>
+    /// Used to advance the dialog and play the relevent sound.
+    /// </summary>
     public void ContinueButtonClicked()
     {
         soundManager.PlaySound("mouse_click");
         ContinueConversation();
     }
 
+    /// <summary>
+    /// Used to end the game.
+    /// </summary>
     public void CoinClicked()
     {
         PlayerPrefs.SetString("character", characterName);
@@ -59,12 +80,20 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    /// <summary>
+    /// Used to change the character/cabin and play the relevent sound.
+    /// </summary>
+    /// <param name="character">The character your switching to.</param>
     public void ChangeCabinButtonClicked(string character)
     {
         soundManager.PlaySound("mouse_click");
         ChangeCabin(character);
     }
 
+    /// <summary>
+    /// Stops all themes playing and plays the new theme.
+    /// </summary>
+    /// <param name="sound">The theme to play, should be one of: soldier_theme, hero_theme, alien_theme.</param>
     private void CharacterSound(string sound)
     {
         soundManager.StopSound("soldier_theme");
@@ -74,6 +103,10 @@ public class GameManager : MonoBehaviour
         soundManager.PlaySound(sound);
     }
     
+    /// <summary>
+    /// Switches the cabin (by changing the camera position) and plays the relevent sound.
+    /// </summary>
+    /// <param name="character">The character to switch to.</param>
     public void ChangeCabin(string character)
     {
         switch (character)
@@ -123,22 +156,37 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Sets the current character and begins showing their conversation.
+    /// </summary>
+    /// <param name="character">The character to switch to.</param>
     private void SetCharacter(Character character)
     {
         currentCharacter = character;
         character.DisplayConversation();
     }
 
+    /// <summary>
+    /// Continues the conversation of the current character.
+    /// </summary>
     public void ContinueConversation()
     {
         currentCharacter.ContinueConversation();
     }
 
-    internal void WordClicked(string lastClickedWord)
+    /// <summary>
+    /// Calls "WordClicked" on the current character.
+    /// </summary>
+    /// <param name="clickedWord">The word that was clicked</param>
+    internal void WordClicked(string clickedWord)
     {
-        currentCharacter.WordClicked(lastClickedWord);
+        currentCharacter.WordClicked(clickedWord);
     }
 
+    /// <summary>
+    /// Switches the UI to show buttons instead of dialog.
+    /// </summary>
+    /// <param name="choices">The choices to display to the player.</param>
     internal void SwitchToQuestionUI(JToken choices)
     {
         //hide the other dialog ui components
@@ -176,6 +224,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary> Switches to the dialog UI. </summary>
     internal void SwitchToDialogUI()
     {
         //destroy any previous buttons.
