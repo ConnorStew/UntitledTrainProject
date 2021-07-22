@@ -6,7 +6,7 @@
     },
 
     {
-      "dialog": "No, though my people are a powerful space faring race, that wasn’t my job.",
+      "dialog": "No, though my people are a powerful space faring <color=yellow>race</color>, that wasn’t my <color=yellow>job</color>.",
       "links": [
         {
           "word": "race",

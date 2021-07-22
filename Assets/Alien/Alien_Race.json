@@ -6,7 +6,7 @@
     },
 
     {
-      "dialog": "Yes my people are quite the conquerors, many worlds have fallen to our superior technology and training in hand to mouth combat.",
+      "dialog": "Yes my people are quite the <color=yellow>conquerors</color>, many worlds have fallen to our superior technology and training in hand to mouth <color=yellow>combat</color>.",
       "links": [
         {
           "word": "conquerors",

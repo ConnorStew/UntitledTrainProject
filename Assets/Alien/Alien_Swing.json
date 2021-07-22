@@ -6,7 +6,7 @@
     },
 
     {
-      "dialog": "Well apparently I look like the creatures she would hunt to earn her keep, before this.",
+      "dialog": "Well apparently I look like the <color=yellow>creatures</color> she would <color=yellow>hunt</color> to earn her keep, before this.",
       "links": [
         {
           "word": "creatures",
