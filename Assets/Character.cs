@@ -278,18 +278,25 @@ public class Character
 
         if (currentConversation != null)
         {
+            string character = (string)currentConversation["character"];
+            if (character != null)
+            {
+                dialogManager.SetCharacter(character);
+            }
+            else
+            {
+                dialogManager.SetCharacter(name);
+            }
 
             if (dialogType == DialogType.Dialog)
             {
                 string currentDialog = (string)currentConversation["dialog"];
-                dialogManager.SetCharacter(name);
                 dialogManager.SetConversation(currentDialog);
             }
 
             if (dialogType == DialogType.Response)
             {
                 string currentDialog = (string)currentConversation["response"];
-                dialogManager.SetCharacter(name);
                 dialogManager.SetConversation(currentDialog);
             }
         }
