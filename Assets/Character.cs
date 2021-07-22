@@ -91,7 +91,17 @@ public class Character
 
         if (dialogType == DialogType.Response)
         {
-            links = (JArray)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].links");
+            if (currentConversation["choices"] != null)
+            {
+                links = (JArray)currentConversation.SelectToken($"$.choices[?(@.choice=='{lastChoiceClicked}')].links");
+            } 
+            else
+            {
+                if (state == DialogState.SideDialog)
+                {
+                    links = (JArray)currentConversation.SelectToken($"$.links");
+                }
+            }
         }
 
         foreach (JToken link in links.Children())
