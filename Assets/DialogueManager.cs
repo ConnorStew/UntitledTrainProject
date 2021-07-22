@@ -51,24 +51,6 @@ public class DialogueManager : MonoBehaviour
     /// <param name="dialog">The dialog to display.</param>
     public void SetConversation(string dialog)
     {
-        switch (gameManager.currentCharacter.name)
-        {
-            case "Soldier":
-                soldierAnimator.SetBool("Talking", true);
-                soldierAnimator.SetBool("Idle", false);
-                break;
-
-            case "Hunter":
-                hunterAnimator.SetBool("Talking", true);
-                hunterAnimator.SetBool("Idle", false);
-                break;
-
-            case "Alien":
-                alienAnimator.SetBool("Talking", true);
-                alienAnimator.SetBool("Idle", false);
-                break;
-        }
-
         sentences.Clear();
 
         gameManager.currentCharacter.DialogRead(dialog);
@@ -89,38 +71,8 @@ public class DialogueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
-        StopTyping();
-        StartCoroutine(TypeSentence(sentence));
-    }
-
-    /// <summary>
-    /// Stops all voice sounds and stops typing.
-    /// </summary>
-    private void StopTyping()
-    {
-        soundManager.StopSound("hunter_voice");
-        soundManager.StopSound("alien_voice");
-        soundManager.StopSound("soldier_voice");
-
-        switch (gameManager.currentCharacter.name)
-        {
-            case "Soldier":
-                soldierAnimator.SetBool("Talking", false);
-                soldierAnimator.SetBool("Idle", true);
-                break;
-
-            case "Hunter":
-                hunterAnimator.SetBool("Talking", false);
-                hunterAnimator.SetBool("Idle", true);
-                break;
-
-            case "Alien":
-                alienAnimator.SetBool("Talking", false);
-                alienAnimator.SetBool("Idle", true);
-                break;
-        }
-
         StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentence));
     }
 
     /// <summary>
@@ -139,6 +91,8 @@ public class DialogueManager : MonoBehaviour
         if (!nameText.text.Equals("Player"))
             soundManager.PlaySound($"{charName}_voice");
 
+        StartTalking();
+
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
@@ -146,6 +100,57 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
 
+        StopTalking();
+
         soundManager.StopSound($"{charName}_voice");
+    }
+    
+    /// <summary>
+    /// Starts the current characters talking animation.
+    /// </summary>
+    public void StartTalking()
+    {
+        switch (gameManager.currentCharacter.name)
+        {
+            case "Soldier":
+                soldierAnimator.SetBool("Talking", true);
+                soldierAnimator.SetBool("Idle", false);
+                break;
+
+            case "Hunter":
+                hunterAnimator.SetBool("Talking", true);
+                hunterAnimator.SetBool("Idle", false);
+                break;
+
+            case "Alien":
+                alienAnimator.SetBool("Talking", true);
+                alienAnimator.SetBool("Idle", false);
+                break;
+        }
+
+    }
+
+    /// <summary>
+    /// Stops the current characters talking animation.
+    /// </summary>
+    public void StopTalking()
+    {
+        switch (gameManager.currentCharacter.name)
+        {
+            case "Soldier":
+                soldierAnimator.SetBool("Talking", false);
+                soldierAnimator.SetBool("Idle", true);
+                break;
+
+            case "Hunter":
+                hunterAnimator.SetBool("Talking", false);
+                hunterAnimator.SetBool("Idle", true);
+                break;
+
+            case "Alien":
+                alienAnimator.SetBool("Talking", false);
+                alienAnimator.SetBool("Idle", true);
+                break;
+        }
     }
 }
