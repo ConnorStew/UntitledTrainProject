@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public SoundManager soundManager;
 
     /// <summary> The panel that displays the game's dialog, used as a parent for buttons. </summary>
-    public GameObject dialogPanel;
+    public GameObject buttonContainer;
 
     /// <summary> The prefab used to generate the decision buttons. </summary>
     public GameObject buttonPrefab;
@@ -193,49 +193,68 @@ public class GameManager : MonoBehaviour
         dialogText.SetActive(false);
         continueButton.SetActive(false);
 
-        //destroy any previous buttons.
-        while (buttons.Count > 0)
-        {
-            GameObject button = buttons.Dequeue();
-            Destroy(button);
-        }
+        DestoryButtons();
 
-        RectTransform rt = (RectTransform)dialogPanel.transform;
+        //We're going to place the buttons relative to the dialog panel, this'll give us the coordiantes we need.
+        RectTransform buttonContainerTransform = (RectTransform)buttonContainer.transform;
 
-        float x = 500;// dialogPanel.transform.position.x;// - rt.rect.width / 8;
-        float y = 100;// dialogPanel.transform.position.y; // + rt.rect.height / 8
+        int buttonCount = 0;
         foreach (JToken choice in choices.Children())
         {
             string choiceText = choice.Value<string>("choice");
 
-            GameObject button = (GameObject)Instantiate(buttonPrefab);
-            button.transform.SetParent(dialogPanel.transform);
-            button.transform.position = new Vector3(x, y);
-            button.GetComponent<Button>().onClick.AddListener(delegate { currentCharacter.ChoiceClicked(choiceText); } );
-            button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choiceText;
+            GameObject button = Instantiate(buttonPrefab);
+
+            RectTransform buttonTransform = (RectTransform)button.transform;
+
+            // add an event for when the button is clicked.
+            button.GetComponent<Button>().onClick.AddListener(delegate { currentCharacter.ChoiceClicked(choiceText); });
+
+            // set the buttons text to it's assigned choice.
+            TMP_Text text = button.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            text.text = choiceText;
+            text.fontStyle = FontStyles.Bold;
+
+            // set the dialog panel as the parent.
+            button.transform.SetParent(buttonContainer.transform);
+            
+            // make the button active
             button.SetActive(true);
 
+            // set the transform to the correct position
+            button.transform.localScale = buttonContainerTransform.localScale;
+            buttonTransform.sizeDelta = new Vector2(buttonContainerTransform.sizeDelta.x, buttonContainerTransform.sizeDelta.y / 4);
+
+            float spacing = (buttonCount * (buttonTransform.sizeDelta.y));
+            float y = buttonContainerTransform.sizeDelta.y / 2 - buttonTransform.sizeDelta.y / 2 - spacing;
+            button.transform.localPosition = new Vector3(0, y, 0);
+
+            // add the button to the queue so it can be destroyed later
             buttons.Enqueue(button);
 
-            Debug.Log(button.transform.position.x);
-            Debug.Log(button.transform.position.y);
-
-            y -= 30;
+            buttonCount++;
         }
     }
 
     /// <summary> Switches to the dialog UI. </summary>
     internal void SwitchToDialogUI()
     {
-        //destroy any previous buttons.
+        DestoryButtons();
+
+        //show dialog UI
+        dialogText.SetActive(true);
+        continueButton.SetActive(true);
+    }
+
+    /// <summary>
+    /// Destroys any previously created buttons.
+    /// </summary>
+    private void DestoryButtons()
+    {
         while (buttons.Count > 0)
         {
             GameObject button = buttons.Dequeue();
             Destroy(button);
         }
-
-        //show dialog UI
-        dialogText.SetActive(true);
-        continueButton.SetActive(true);
     }
 }
