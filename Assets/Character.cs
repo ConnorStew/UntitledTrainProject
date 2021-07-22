@@ -266,7 +266,6 @@ public class Character
 
         if (conversationEnded)
         {
-            dialogManager.EndDialogue(); //calling this again to make sure dialog window closes.
             return;
         }
 
