@@ -5,7 +5,7 @@
     },
 
     {
-      "dialog": "Well hope ya get settled in. I’m always around if ya feel the need for a drink of a hand of cards, got some fresh bread here, feel free to take some if ya get hungry.",
+      "dialog": "Well hope ya get settled in. I’m always around if ya feel the need for a drink of a hand of cards, got some fresh <color=yellow>bread</color> here, feel free to take some if ya get hungry.",
       "links": [
         {
           "word": "bread",
@@ -18,7 +18,7 @@
       "choices": [
         {
           "choice": "How long have you been here?",
-          "response": "Just over a couple of weeks. It’s a nice enough ride, though I’m not sure where we’re headed, and that driver kinda gives me the willies.",
+          "response": "Just over a couple of weeks. It’s a nice enough ride, though I’m not sure where we’re headed, and that <color=yellow>driver</color> kinda gives me the <color=yellow>willies</color>.",
           "links": [
             {
               "word": "driver",
@@ -32,7 +32,7 @@
         },
         {
           "choice": "Have you met any of the other passengers?",
-          "response": "Yeah that Hunter aint got much class, but she’s a hoot and a half I’ll tell ya that. Got stories that’ll make any man squirm like a racoon in the wash. The lil’ fellas a tad odd for my taste seems decent enough but i don’t trust him much. Always just sorta staring at ya, like he’s seein right through ya.",
+          "response": "Yeah that <color=yellow>Hunter</color> aint got much class, but she’s a hoot and a half I’ll tell ya that. Got <color=yellow>stories</color> that’ll make any man squirm like a racoon in the wash. The lil’ fellas a tad odd for my taste seems decent enough but i don’t trust him much. Always just sorta <color=yellow>staring</color> at ya, like he’s seein right through ya.",
           "links": [
             {
               "word": "Hunter",
@@ -54,7 +54,7 @@
         },
         {
           "choice": "What did you do before this?",
-          "response": "Well… been a soldier most my life. Got made a sergeant after my C.O was taken out. Never expected when I signed up that I’d be in charge of anyone.",
+          "response": "Well… been a soldier most my life. Got made a sergeant after my C.O was taken <color=yellow>out</color>. Never <color=yellow>expected</color> when I signed up that I’d be in <color=yellow>charge</color> of anyone.",
           "links": [
             {
               "word": "out",
