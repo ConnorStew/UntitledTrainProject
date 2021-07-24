@@ -1,5 +1,5 @@
 # Soul Train 🚂
-This was a game created for the GJL Game Parade Summer 2021 where the theme was 1 time use. We chose to focus on making a story game where you explore a train carrying patrons who have just passed but still have regrets. You have a coin that you can give to them and this will allow them to go back and fix their past mistakes.
+This game was created for the GJL Game Parade Summer 2021, the theme was one time use. Soul Train is a story game which allows you explore a train carrying patrons who've passed away but still have regrets. You have a coin that can give a passenger a second chance.
 
 # Creators
 
@@ -11,8 +11,8 @@ This was a game created for the GJL Game Parade Summer 2021 where the theme was 
 
 # Credits
 
-### Fonts
+## Fonts
 conthrax-sb (Main font): https://www.dafont.com/conthrax.font
 
-### Skybox
+## Skybox
 space sky: https://assetstore.unity.com/packages/2d/textures-materials/sky/spaceskies-free-80503
